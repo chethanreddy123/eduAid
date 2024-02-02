@@ -13,8 +13,8 @@ mongo_connection_teacher = MongoDBConnection(sub_collection="Teachers")
 db_teacher = mongo_connection_teacher.connect()
 
 
-mongo_connection_teacher = MongoDBConnection(sub_collection="Classes")
-db_classes = mongo_connection_teacher.connect()
+mongo_connection_classes = MongoDBConnection(sub_collection="Classes")
+db_classes = mongo_connection_classes.connect()
 
 router = APIRouter(
     prefix='/classes',
@@ -28,6 +28,7 @@ def add_class(class_data: dict):
         class_dict = class_data
         class_dict["created_at"] = datetime.utcnow()
         class_dict["updated_at"] = datetime.utcnow()
+        class_dict['study_plan'] = {}
 
         result = db_classes.insert_one(class_dict)
         class_dict["_id"] = str(result.inserted_id)
@@ -40,11 +41,14 @@ def add_class(class_data: dict):
 @router.get("/get_classes/{student_id}")
 def get_class(student_id: str):
     try:
-        class_ = db_classes.find({"_id": ObjectId(student_id)})
-        if class_:
-            for i in class_:
+        class_curr = db_classes.find({"student_id": student_id})
+        if class_curr:
+            final_result = []
+            for i in class_curr:
+                logger.info(i)
                 i["_id"] = str(i["_id"])
-            return class_
+                final_result.append(i)
+            return final_result
         else:
             raise HTTPException(status_code=404, detail="Class not found")
     except Exception as e:

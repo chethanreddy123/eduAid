@@ -52,7 +52,6 @@ def get_student(student_id: str):
         if student:
             student["_id"] = str(student["_id"])
             del student['study_plan']
-            del student['class_list']
             return student
         else:
             raise HTTPException(status_code=404, detail="Student not found")

@@ -21,8 +21,8 @@ db_student = mongo_connection_student.connect()
 mongo_connection_teacher = MongoDBConnection(sub_collection="Teachers")
 db_teacher = mongo_connection_teacher.connect()
 
-mongo_connection_teacher = MongoDBConnection(sub_collection="Classes")
-db_classes = mongo_connection_teacher.connect()
+mongo_connection_classes = MongoDBConnection(sub_collection="Classes")
+db_classes = mongo_connection_classes.connect()
 
 
 
@@ -77,12 +77,12 @@ async def generate_summary_class(student_id: str, transcript: UploadFile = File(
         raise HTTPException(status_code=500, detail=str(e))
     
 
-@router.post("/generate_class_insights/{student_id}")
+@router.post("/generate_class_insights/{class_id}")
 async def generate_class_insights(class_id: str, transcript: UploadFile = File(...)):
     try:
-        current_class = db_student.find_one({"_id": ObjectId(class_id)})
+        current_class = db_classes.find_one({"_id": ObjectId(class_id)})
         if not current_class:
-            raise HTTPException(status_code=404, detail="Class not found")
+            return {"message": "Class not found"}
 
         save_path = os.path.join("uploads", "sample.txt")  # Adjust the save path as needed
         with open(save_path, "wb") as file:
@@ -130,7 +130,7 @@ async def generate_class_insights(class_id: str, transcript: UploadFile = File(.
         
 
         # Update the student document with the new class insights description
-        db_student.update_one({"_id": ObjectId(class_id)},
+        db_classes.update_one({"_id": ObjectId(class_id)},
                               {"$set": {"class_insights": class_insights}})
 
         return {"message": "Class insights description added successfully",

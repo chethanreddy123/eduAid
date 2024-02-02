@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from bson.objectid import ObjectId
+from bson import ObjectId
 from fastapi import APIRouter, Response, status, Depends, HTTPException
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -56,16 +56,21 @@ def get_teacher(teacher_id: str):
 @router.get("/{teacher_id}/students/")
 def get_students_under_teacher(teacher_id: str):
     try:
-        # Find the teacher's document by ID
+     
         teacher_query = {"_id": ObjectId(teacher_id)}
         teacher = db_teacher.find_one(teacher_query)
+        print(teacher)
+ 
 
-        if not teacher:
-            raise HTTPException(status_code=404, detail="Teacher not found")
+        if teacher == None:
+            return {"message": "Teacher not found"}
+        
+   
 
         # Extract the list of student IDs from the teacher's document
         student_ids = teacher.get("students", [])
         logger.info(f"Teacher: {teacher}")
+
         
         logger.info(f"student_ids: {student_ids}")
 
@@ -77,10 +82,12 @@ def get_students_under_teacher(teacher_id: str):
 
         final_students = []
 
+        logger.info(f"students: {students}")
+
+
         for student in students:
             student["_id"] = str(student["_id"])
             del student['study_plan']
-            del student['class_list']
             final_students.append(student)
 
         logger.info(f"students: {final_students}")
