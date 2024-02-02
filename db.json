@@ -1,0 +1,51 @@
+// Student: 
+{
+    "_id": "ObjectId('student_id')",
+    "name": "Student Name",
+    "email": "student@example.com",
+    "grade": "Grade Level",
+    "studyPlan": {
+      "study_plan_id": "ObjectId('study_plan_id')"
+    }
+  
+}
+
+// Classes: 
+{
+  "_id": "ObjectId('class_id')",
+  "student_id": "ObjectId('student_id')",
+  "class_type": "demo/normal",
+  "class_recording_transcript": "Class Recording Transcript",
+  "study_plan_insights": {
+      "objectives_met": true,
+      "objectives_met_description": false,
+      "concepts_taught": ["concept1", "concept2", "concept3"],
+      "student_understanding_level": "Intermediate",
+      "gaps_identified": ["gap1", "gap2"],
+      "other_details": {
+          "summary": "Brief summary of the key points discussed in the class",
+          "engagement_metrics": {
+              "participation_rate": "High",
+              "questions_asked": []
+          }
+      }
+  }
+}
+
+
+
+// Teacher: 
+{
+    "_id": "ObjectId('teacher_id')",
+    "name": "Teacher Name",
+    "email": "teacher@example.com",
+    "students": [
+      "ObjectId('student_id_1')",
+      "ObjectId('student_id_2')",
+      // ... other student ids
+    ]
+}
+  
+  
+
+  
