@@ -10,6 +10,6 @@ reportlab
 kaleido
 typing
 python-dotenv
-google-generativeai==0.1.0
+google-generativeai==0.3.2
 langchain-google-genai==0.0.5
 langchain==0.0.353
