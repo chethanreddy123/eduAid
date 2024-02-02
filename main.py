@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import llm_routes, teacher, student
+from routers import llm_routes, teacher, student, classes
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -20,3 +20,4 @@ app.add_middleware(
 app.include_router(llm_routes.router)
 app.include_router(teacher.router)
 app.include_router(student.router)
+app.include_router(classes.router)
