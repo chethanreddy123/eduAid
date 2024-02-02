@@ -90,10 +90,12 @@ def get_llm_chain_response(text_file_path:str, user_selection:str, teacher_name:
     return output
 
 
-final_result = get_llm_chain_response("notebooks_analysis/class_transcript.txt",
-                                       "list", "John Doe", "ABC School",CONCEPTS_TAUGHT_PROMPT , CONCEPTS_TAUGHT_PROMPT_OUTPUT)
 
 
-print(final_result)
+# final_result = get_llm_chain_response("notebooks_analysis/class_transcript.txt",
+#                                        "list", "John Doe", "ABC School",CONCEPTS_TAUGHT_PROMPT , CONCEPTS_TAUGHT_PROMPT_OUTPUT)
+
+
+# print(final_result)
 
 
