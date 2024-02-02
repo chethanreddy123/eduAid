@@ -20,7 +20,7 @@ router = APIRouter(
 
 
 
-@router.post("/add/")
+@router.post("/add_student/")
 def add_student(student: dict):
     try:
         student_dict = student
