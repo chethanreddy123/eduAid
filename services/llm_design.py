@@ -48,8 +48,14 @@ def get_llm_chain_response(text_file_path:str, user_selection:str, teacher_name:
         - A verbose summary
         - You may do a few paragraphs to describe the transcript if needed
         """,
+
         'list' : """
         - A list of items: ['point1', 'point2', 'point3']
+        """,
+
+        'class_plan' : """
+        - Make proper class plan
+        - day wise plan for the class
         """
     }
 

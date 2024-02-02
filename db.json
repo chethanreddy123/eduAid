@@ -17,17 +17,13 @@
   "class_type": "demo/normal",
   "class_recording_transcript": "Class Recording Transcript",
   "study_insights": {
-      "objectives_met": true,
-      "objectives_met_description": false,
+    "summary" : "summary",
+      "objectives" : "Objectives",
       "concepts_taught": ["concept1", "concept2", "concept3"],
       "student_understanding_level": "Intermediate",
       "gaps_identified": ["gap1", "gap2"],
-      "other_details": {
-          "summary": "Brief summary of the key points discussed in the class",
-          "engagement_metrics": {
-              "participation_rate": "High",
-              "questions_asked": []
-          }
+      "teacher_imporvement_suggestions": "Teacher Improvement Suggestions",
+      "takeaways": "Takeaways"
       }
   }
 }
