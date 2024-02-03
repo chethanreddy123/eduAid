@@ -41,7 +41,7 @@ async def generate_notes(file: UploadFile = File(...)):
         for path_image in output_paths:
             image = Image.open(path_image)
             model_image = llm.get_image_model()
-            prompt = "You are tasked with interpreting handwritten notes from a programming instructor. The notes are presented in the form of an image. Your goal is to analyze and comprehend the content of these handwritten notes, focusing on extracting key information related to programming concepts. Provide a detailed understanding and summary  in well structured format of the instructor's notes based on the presented image."
+            prompt = "You are tasked with interpreting handwritten notes from a programming instructor. The notes are presented in the form of an image. Your goal is to analyze and comprehend the content of these handwritten notes, focusing on extracting key information related to programming concepts. Provide a detailed and crisp understanding and summary  in well structured format of the instructor's notes based on the presented image."
 
             response = model_image.generate_content([prompt, image])
             response.resolve()
