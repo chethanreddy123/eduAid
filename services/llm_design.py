@@ -56,6 +56,23 @@ def get_llm_chain_response(text_file_path:str, user_selection:str, teacher_name:
         'class_plan' : """
         - Make proper class plan
         - day wise plan for the class
+        """,
+
+        'class_json' : """
+        Output in the following JSON format: 
+
+        {
+        "study_plan" : [
+            A list of dictionaries like given below:
+                {
+                    "class_no": "number of the class,
+                    "topic": "topic for the class"
+                }
+            ]
+        }
+
+
+        Be as concise as possible in your output.
         """
     }
 

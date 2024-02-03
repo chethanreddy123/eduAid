@@ -9,6 +9,7 @@ from bson.objectid import ObjectId
 import os
 import PIL.Image
 import io
+import json
 
 router = APIRouter(
     prefix='/llm',
@@ -159,3 +160,65 @@ async def image_analysis(file: UploadFile = File(...), text: str = Form(...)):
     return {
         "response" : str(response.text)
     }
+
+
+@router.post("/generate_study_plan_json/{class_id}")
+async def generate_study_plan_json(class_id: str, transcript: UploadFile = File(...)):
+    try:
+        class_curr = db_classes.find_one({"_id": ObjectId(class_id)})
+        if not class_curr:
+            return {"message": "Class not found"}
+        
+        study_plan = class_curr.get("study_plan", {})
+
+        if study_plan:
+            return {"message": "Study plan already exists",
+                    "study_plan": study_plan}
+        
+
+        save_path = os.path.join("uploads", "sample.txt")  # Adjust the save path as needed
+        with open(save_path, "wb") as file:
+            file.write(await transcript.read())
+
+        output_format = "class_json"
+        teacher_name = "Jack"
+        school_name = "ABC School"
+        prompt_template = STUDY_PLAN_PROMPT
+        prompt_output_template = STUDY_PLAN_PROMPT_OUTPUT
+
+
+        max_retries = 5
+        current_retry = 0
+        result = None
+
+        while current_retry < max_retries:
+            try:
+                # Replace with your actual function call
+                result = get_llm_chain_response("uploads/sample.txt",
+                                            output_format, teacher_name, school_name,
+                                            prompt_template, prompt_output_template)
+                logger.info(f"Result: {result}")
+                result = result.replace('`', "").replace("json", "").strip()
+                logger.info(f"Result Cleaned: {result}")
+                result = json.loads(result)
+                break  # If successful, exit the loop
+            except Exception as e:
+                print(f"Error fetching response: {e}")
+                current_retry += 1
+                print(f"Retrying... Attempt {current_retry}")
+
+
+
+        # Assuming there's a field named 'study_plan' in the student document
+    
+        study_plan = result['study_plan']
+
+        # Update the student document with the new study plan description
+        db_classes.update_one({"_id": ObjectId(class_id)},
+                              {"$set": {"study_plan": study_plan}})
+
+        return {"message": "Study plan description added successfully",
+                "study_plan": study_plan}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -103,6 +103,7 @@ def get_latest_teacher():
         teacher = db_teacher.find_one(sort=[("created_at", -1)])
         if teacher:
             teacher["_id"] = str(teacher["_id"])
+            del teacher['students']
             return teacher
         else:
             raise HTTPException(status_code=404, detail="Teacher not found")

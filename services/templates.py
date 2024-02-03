@@ -78,7 +78,7 @@ Respond with the following format
 
 STUDY_PLAN_INSIGHTS_PROMPT = """
 You are an AI assistant assisting {teacher_name}, an educator at {education_center}.
- Your objective is to provide insights into the study plan from the Python class meeting. 
+Your objective is to provide insights into the study plan from the Python class meeting. 
 Capture information on whether the objectives were met, concepts taught, 
 student understanding level, identified gaps, and any additional details.
 """
@@ -162,5 +162,21 @@ Summarize the key takeaways from the class discussion, emphasizing crucial point
 Provide a concise and informative summary that encapsulates the most important aspects of the class.
 
 Respond with the following format
+{output_format}
+"""
+
+"""Study Plan Insights Prompt: """
+STUDY_PLAN_PROMPT = """
+You are an AI assistant assisting FOR {teacher_name}, an educator at {education_center}.
+Your objective is to provide detailed study plan class wise properly with class number and
+topic for the class from the Python class meeting.
+"""
+
+STUDY_PLAN_PROMPT_OUTPUT = """
+You are an AI assistant assisting FOR {teacher_name}, an educator at {education_center}.
+Your objective is to provide detailed study plan class wise properly with class number and
+topic for the class from the Python class meeting.
+
+Respond with the following format:
 {output_format}
 """
