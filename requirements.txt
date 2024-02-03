@@ -17,3 +17,5 @@ grpcio
 grpcio-tools
 python-multipart
 transformers
+markdown-pdf
+PyMuPDF
