@@ -28,7 +28,7 @@ def add_class(class_data: dict):
         class_dict = class_data
         class_dict["created_at"] = datetime.utcnow()
         class_dict["updated_at"] = datetime.utcnow()
-        class_dict['study_plan'] = {}
+        class_dict['class_insights'] = {}
 
         result = db_classes.insert_one(class_dict)
         class_dict["_id"] = str(result.inserted_id)
@@ -63,6 +63,6 @@ def make_study_plan(class_id: str):
         class_curr = db_classes.find_one({"_id": ObjectId(class_id)})
         if class_curr:
             class_curr["_id"] = str(class_curr["_id"])
-            
+
     except Exception as e:
         return {"message": str(e)}

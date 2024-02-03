@@ -51,7 +51,6 @@ def get_student(student_id: str):
         logger.info(student)
         if student:
             student["_id"] = str(student["_id"])
-            del student['study_plan']
             return student
         else:
             raise HTTPException(status_code=404, detail="Student not found")

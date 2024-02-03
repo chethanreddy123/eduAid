@@ -84,6 +84,11 @@ async def generate_class_insights(class_id: str, transcript: UploadFile = File(.
         current_class = db_classes.find_one({"_id": ObjectId(class_id)})
         if not current_class:
             return {"message": "Class not found"}
+        
+        if current_class.get("class_insights") != {}:
+            return {"message": "Class insights already exists",
+                    "class_insights": current_class.get("class_insights")}
+
 
         save_path = os.path.join("uploads", "sample.txt")  # Adjust the save path as needed
         with open(save_path, "wb") as file:
@@ -92,32 +97,29 @@ async def generate_class_insights(class_id: str, transcript: UploadFile = File(.
         class_insights = current_class.get("class_insights", {})
 
         summary = get_llm_chain_response("uploads/sample.txt" ,
-                                              'class_plan', "Chethan", "Edvi",
+                                              'long', "Chethan", "Edvi",
                                               CLASS_SUMMARY_SHORT_PROMPT, CLASS_SUMMARY_SHORT_PROMPT_OUTPUT)
         
         objective = get_llm_chain_response("uploads/sample.txt" ,
-                                              'class_plan', "Chethan", "Edvi",
+                                              'bullet_points', "Chethan", "Edvi",
                                               OBJECTIVE_PROMPT, OBJECTIVE_PROMPT_OUTPUT)
         
         concepts_taught = get_llm_chain_response("uploads/sample.txt" ,
-                                              'class_plan', "Chethan", "Edvi",
+                                              'bullet_points', "Chethan", "Edvi",
                                               CONCEPTS_TAUGHT_PROMPT, CONCEPTS_TAUGHT_PROMPT_OUTPUT)
         
         student_understanding_level = get_llm_chain_response("uploads/sample.txt" ,
-                                              'class_plan', "Chethan", "Edvi",
+                                              'one_sentence', "Chethan", "Edvi",
                                               STUDENT_UNDERSTANDING_LEVEL_PROMPT, STUDENT_UNDERSTANDING_LEVEL_PROMPT_OUTPUT)
         
         gaps_identified = get_llm_chain_response("uploads/sample.txt" ,
-                                              'class_plan', "Chethan", "Edvi",
+                                              'bullet_points', "Chethan", "Edvi",
                                               GAPS_IDENTIFIED_PROMPT, GAPS_IDENTIFIED_PROMPT_OUTPUT)
         
         teacher_imporvement_suggestions = get_llm_chain_response("uploads/sample.txt" ,
-                                                'class_plan', "Chethan", "Edvi",
+                                                'short', "Chethan", "Edvi",
                                                 TEACHER_IMPROVEMENT_SUGGESTIONS_PROMPT, TEACHER_IMPROVEMENT_SUGGESTIONS_PROMPT_OUTPUT)
         
-        takeaways = get_llm_chain_response("uploads/sample.txt" ,
-                                                'class_plan', "Chethan", "Edvi",
-                                                TAKEAWAYS_PROMPT, TAKEAWAYS_PROMPT_OUTPUT)
 
         # Assuming there's a field named 'class_insights' in the student document:
         class_insights["summary"] = summary
@@ -126,7 +128,6 @@ async def generate_class_insights(class_id: str, transcript: UploadFile = File(.
         class_insights['student_understanding_level'] = student_understanding_level
         class_insights['gaps_identified'] = gaps_identified
         class_insights['teacher_imporvement_suggestions'] = teacher_imporvement_suggestions
-        class_insights['takeaways'] = takeaways
 
         
 
@@ -169,7 +170,12 @@ async def generate_study_plan_json(class_id: str, transcript: UploadFile = File(
         if not class_curr:
             return {"message": "Class not found"}
         
-        study_plan = class_curr.get("study_plan", {})
+        student_curr = db_student.find_one({"_id": ObjectId(class_curr['student_id'])})
+        
+        study_plan = student_curr.get("study_plan", {})
+        if study_plan != {}:
+            return {"message": "Study plan already exists",
+                    "study_plan": study_plan}
 
         if study_plan:
             return {"message": "Study plan already exists",
@@ -213,8 +219,8 @@ async def generate_study_plan_json(class_id: str, transcript: UploadFile = File(
     
         study_plan = result['study_plan']
 
-        # Update the student document with the new study plan description
-        db_classes.update_one({"_id": ObjectId(class_id)},
+        
+        db_student.update_one({"_id": ObjectId(class_curr['student_id'])},
                               {"$set": {"study_plan": study_plan}})
 
         return {"message": "Study plan description added successfully",
