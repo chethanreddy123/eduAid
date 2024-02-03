@@ -56,3 +56,13 @@ def get_class(student_id: str):
     
 
     
+
+@router.get("/make_study_plan/{class_id}")
+def make_study_plan(class_id: str):
+    try:
+        class_curr = db_classes.find_one({"_id": ObjectId(class_id)})
+        if class_curr:
+            class_curr["_id"] = str(class_curr["_id"])
+            
+    except Exception as e:
+        return {"message": str(e)}

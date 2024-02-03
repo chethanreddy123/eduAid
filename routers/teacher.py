@@ -95,3 +95,16 @@ def get_students_under_teacher(teacher_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
+
+
+@router.get("/get_latest_teacher/")
+def get_latest_teacher():
+    try:
+        teacher = db_teacher.find_one(sort=[("created_at", -1)])
+        if teacher:
+            teacher["_id"] = str(teacher["_id"])
+            return teacher
+        else:
+            raise HTTPException(status_code=404, detail="Teacher not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
