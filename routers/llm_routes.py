@@ -163,14 +163,15 @@ async def image_analysis(file: UploadFile = File(...), text: str = Form(...)):
     }
 
 
-@router.post("/generate_study_plan_json/{class_id}")
-async def generate_study_plan_json(class_id: str, transcript: UploadFile = File(...)):
+@router.post("/generate_study_plan_json/{student_id}")
+async def generate_study_plan_json(student_id: str, transcript: UploadFile = File(...)):
     try:
-        class_curr = db_classes.find_one({"_id": ObjectId(class_id)})
-        if not class_curr:
-            return {"message": "Class not found"}
+       
         
-        student_curr = db_student.find_one({"_id": ObjectId(class_curr['student_id'])})
+        student_curr = db_student.find_one({"_id": ObjectId(student_id)})
+
+        if not student_curr:
+            return {"message": "Student not found"}
         
         study_plan = student_curr.get("study_plan", {})
         if study_plan != {}:
@@ -220,7 +221,7 @@ async def generate_study_plan_json(class_id: str, transcript: UploadFile = File(
         study_plan = result['study_plan']
 
         
-        db_student.update_one({"_id": ObjectId(class_curr['student_id'])},
+        db_student.update_one({"_id": ObjectId(student_id)},
                               {"$set": {"study_plan": study_plan}})
 
         return {"message": "Study plan description added successfully",

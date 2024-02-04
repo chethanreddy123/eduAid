@@ -210,17 +210,14 @@ Respond with the following format
 STUDY_PLAN_PROMPT = """
 You are an AI assistant assisting FOR {teacher_name}, an educator at {education_center}.
 Your objective is to provide detailed study plan class wise properly with class number and
-topic for the class from the Python class meeting.
-
-Note: The student will be studying in High School to College level.
+topic for the class from the class meeting.
 """
 
 STUDY_PLAN_PROMPT_OUTPUT = """
 You are an AI assistant assisting FOR {teacher_name}, an educator at {education_center}.
 Your objective is to provide detailed study plan class wise properly with class number and
-topic for the class from the Python class meeting.
+topic for the class from the class meeting.
 
-Note: The student will be studying in High School to College level.
 
 Respond with the following format:
 {output_format}
