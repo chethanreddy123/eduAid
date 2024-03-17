@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "65be402b1aa875575fa07722"
+  },
+  "name": "Chethan",
+  "email": "chethan_reddy@gmail.com",
+  "grade": "",
+  "course": "",
+  "contact_number": "1236459871",
+  "subjects_taught": "Python, AI, Machine Learning, Data Science",
+  "grade_levels": "6-12",
+  "years_of_experience": "3 Years",
+  "short_bio": "Passionate teacher, uses practical examples to teach",
+  "teaching_methods": "interactive session, real life examples",
+  "qualifications": "BTech in Information Technology, top rated teacher in Edvi",
+  "created_at": {
+    "$date": "2024-02-03T13:31:23.762Z"
+  },
+  "updated_at": {
+    "$date": "2024-02-03T13:31:23.762Z"
+  },
+  "students": [
+    {
+      "$oid": "65be40442b97b60dafa07721"
+    },
+    {
+      "$oid": "65be43155a1c417938a07720"
+    },
+    {
+      "$oid": "65bf936ef3e41ea7b4e5c623"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "65bf92407fda55c638ce23ee"
+  },
+  "name": "Rick Jack",
+  "email": "achethanreddy1921@gmail.com",
+  "grade": "",
+  "course": "",
+  "contact_number": "09030496717",
+  "subjects_taught": "Python",
+  "grade_levels": "10-12",
+  "years_of_experience": "5 years",
+  "short_bio": "Passionate Teacher with good experience",
+  "teaching_methods": "Project Based Coding sessions",
+  "qualifications": "B.Tech CSE",
+  "created_at": {
+    "$date": "2024-02-04T13:33:52.968Z"
+  },
+  "updated_at": {
+    "$date": "2024-02-04T13:33:52.968Z"
+  },
+  "students": [
+    {
+      "$oid": "65bf92897fda55c638ce23ef"
+    },
+    {
+      "$oid": "65bf92ad7fda55c638ce23f0"
+    },
+    {
+      "$oid": "65bf9ea26a833927c7f57f24"
+    },
+    {
+      "$oid": "65bfa64c6a833927c7f57f2c"
+    },
+    {
+      "$oid": "65c1c2d5adabe77683dd1d1e"
+    }
+  ]
+}]
