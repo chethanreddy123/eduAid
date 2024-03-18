@@ -26,7 +26,7 @@ def add_student(student: dict):
         student_dict = student
         student_dict["created_at"] = datetime.utcnow()
         student_dict["updated_at"] = datetime.utcnow()
-        student_dict['study_plan'] = {} 
+        student_dict['study_plan'] = [] 
 
         # Insert the student document into the students sub-collection
         result = db_student.insert_one(student_dict)

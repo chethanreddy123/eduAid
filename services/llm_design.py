@@ -25,7 +25,7 @@ def get_llm_chain_response(text_file_path:str, user_selection:str, teacher_name:
     text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n", "\n"], chunk_size=2000, chunk_overlap=250)
     texts = text_splitter.create_documents([content])
 
-    llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=GOOGLE_API_KEY, convert_system_message_to_human=True)
+    llm = ChatGoogleGenerativeAI(model="gemini-1.0-pro-latest", google_api_key=GOOGLE_API_KEY, convert_system_message_to_human=True)
 
 
     summary_output_options = {

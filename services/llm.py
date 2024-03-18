@@ -17,11 +17,12 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
 class LLM:
-    def __init__(self, model_name = "gemini-pro"):
+    def __init__(self, model_name = "gemini-1.0-pro"):
         self.model = genai.GenerativeModel(model_name)
-        self.image_model = genai.GenerativeModel('gemini-pro-vision')
+        self.image_model = genai.GenerativeModel('gemini-1.0-pro-vision-latest')
 
     def generate_content(self, prompt):
+        print("Generating content")
         response = self.model.generate_content(prompt)
         return response.text
     
