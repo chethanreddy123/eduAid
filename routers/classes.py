@@ -48,6 +48,7 @@ def get_class(student_id: str):
                 logger.info(i)
                 i["_id"] = str(i["_id"])
                 final_result.append(i)
+            logger.info(final_result)
             return final_result
         else:
             raise HTTPException(status_code=404, detail="Class not found")

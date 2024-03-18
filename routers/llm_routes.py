@@ -166,22 +166,15 @@ async def image_analysis(file: UploadFile = File(...), text: str = Form(...)):
 @router.post("/generate_study_plan_json/{student_id}")
 async def generate_study_plan_json(student_id: str, transcript: UploadFile = File(...)):
     try:
-       
-        
         student_curr = db_student.find_one({"_id": ObjectId(student_id)})
 
         if not student_curr:
             return {"message": "Student not found"}
         
         study_plan = student_curr.get("study_plan", {})
-        if study_plan != {}:
+        if study_plan != []:
             return {"message": "Study plan already exists",
                     "study_plan": study_plan}
-
-        if study_plan:
-            return {"message": "Study plan already exists",
-                    "study_plan": study_plan}
-        
 
         save_path = os.path.join("uploads", "sample.txt")  # Adjust the save path as needed
         with open(save_path, "wb") as file:
